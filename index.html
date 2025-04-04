@@ -12,13 +12,16 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #0f0f0f, #1c1c1c);
       color: #eee;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
@@ -80,6 +83,11 @@
 
     .hero-wrapper {
       position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
       overflow: hidden;
     }
 
@@ -102,10 +110,9 @@
     .hero {
       position: relative;
       z-index: 1;
-      padding: 80px 20px;
       text-align: center;
+      padding: 80px 20px;
       color: #fff;
-      box-shadow: inset 0 0 80px rgba(255, 204, 0, 0.1);
     }
 
     .hero h1 {
@@ -136,75 +143,6 @@
       background: linear-gradient(45deg, #ffaa00, #ff6600);
       box-shadow: 0 0 20px rgba(255, 153, 0, 0.8);
       transform: scale(1.05);
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #1e1e1e;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(255, 204, 0, 0.1);
-      flex-grow: 1;
-    }
-
-    section {
-      margin-bottom: 40px;
-    }
-
-    section h2 {
-      color: #ffcc00;
-      font-size: 26px;
-      margin-bottom: 15px;
-      padding-left: 10px;
-      border-left: 4px solid #ffcc00;
-    }
-
-    .play-section h2 {
-      border-left: none;
-      padding-left: 0;
-    }
-
-    section p,
-    section li {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #ccc;
-    }
-
-    ul {
-      padding-left: 20px;
-      list-style-type: square;
-    }
-
-    .play-section {
-      text-align: center;
-    }
-
-    .play-button {
-      background: linear-gradient(45deg, #ffcc00, #ff9900);
-      border: none;
-      padding: 18px 40px;
-      font-size: 20px;
-      color: #121212;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
-      transition: all 0.3s ease-in-out;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .play-button:hover {
-      background: linear-gradient(45deg, #ff9900, #ff6600);
-      box-shadow: 0 0 25px rgba(255, 153, 0, 1);
-      transform: translateY(-3px);
-    }
-
-    .play-button:active {
-      transform: scale(0.98);
-      box-shadow: 0 0 12px rgba(255, 153, 0, 0.6);
     }
 
     footer {
@@ -244,9 +182,9 @@
 
   <div class="hero-wrapper">
     <div class="spline-background">
-      <iframe src="https://my.spline.design/particleaibrain-44c658de200b6a576044df4b436bac11/" frameborder="0" allowfullscreen></iframe>
+      <iframe src="https://my.spline.design/particleaibrain-44c658de200b6a576044df4b436bac11/" allowfullscreen></iframe>
 
-      <!-- ✅ Overlay placed here to cover watermark -->
+      <!-- ✅ Overlay to cover watermark -->
       <div style="
         position: absolute;
         bottom: 15px;
@@ -257,32 +195,12 @@
         z-index: 2;
       "></div>
     </div>
+
     <div class="hero">
       <h1>Play HectoClash Online with Friends</h1>
       <p>Challenge players worldwide or test your skills against AI!</p>
       <button onclick="window.location.href='game.html'">Start Playing</button>
     </div>
-  </div>
-
-  <div class="container">
-    <section id="about">
-      <h2>About the Game</h2>
-      <p>HectoClash is a fast-paced multiplayer math puzzle game where players compete to reach the number 100 using six given digits and basic operators. You can play solo or challenge your friends!</p>
-    </section>
-
-    <section id="modes">
-      <h2>Game Modes</h2>
-      <ul>
-        <li><strong>1v1 Online Multiplayer:</strong> Battle your friends or random players in real-time.</li>
-        <li><strong>AI Mode:</strong> Practice against computer opponents of various difficulty levels.</li>
-        <li><strong>Offline Mode:</strong> Play locally on the same device with a friend.</li>
-      </ul>
-    </section>
-
-    <section id="play" class="play-section">
-      <h2>Start Playing</h2>
-      <button class="play-button" onclick="window.location.href='game.html'">Play Now</button>
-    </section>
   </div>
 
   <footer>
