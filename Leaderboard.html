@@ -85,7 +85,27 @@
       padding-bottom: 5px;
     }
     .filter-container {
-      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-container label {
+      font-weight: bold;
+      color: #ffcc00;
+    }
+    .filter-container input {
+      width: 200px;
+      padding: 8px;
+      border: 2px solid #ffcc00;
+      border-radius: 5px;
+      background: #2a2a2a;
+      color: #ddd;
+      font-size: 14px;
+      outline: none;
+    }
+    .filter-container input:focus {
+      border-color: #ff9900;
     }
     table {
       width: 100%;
@@ -182,21 +202,28 @@
   <footer>
     &copy; 2025 HectoClash. All rights reserved.
   </footer>
-
   <script>
     function applyFilter() {
-      let institute = document.getElementById("instituteFilter").value.toLowerCase();
-      let state = document.getElementById("stateFilter").value.toLowerCase();
-      let rows = document.querySelectorAll("tbody tr");
-      rows.forEach(row => {
-        let instCell = row.cells[3].textContent.toLowerCase();
-        let stateCell = row.cells[4].textContent.toLowerCase();
-        if ((institute === "" || instCell.includes(institute)) && (state === "" || stateCell.includes(state))) {
-          row.style.display = "table-row";
-        } else {
-          row.style.display = "none";
+      let instituteInput = document.getElementById("instituteFilter").value.toLowerCase();
+      let stateInput = document.getElementById("stateFilter").value.toLowerCase();
+      let table = document.querySelector("table tbody");
+      let rows = table.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        let instituteCell = rows[i].getElementsByTagName("td")[3];
+        let stateCell = rows[i].getElementsByTagName("td")[4];
+        
+        if (instituteCell && stateCell) {
+          let instituteText = instituteCell.textContent.toLowerCase();
+          let stateText = stateCell.textContent.toLowerCase();
+          
+          if (instituteText.includes(instituteInput) && stateText.includes(stateInput)) {
+            rows[i].style.display = "";
+          } else {
+            rows[i].style.display = "none";
+          }
         }
-      });
+      }
     }
   </script>
 </body>
