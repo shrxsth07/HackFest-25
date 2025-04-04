@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HectoClash - Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Poppins', sans-serif;
+            background: #121212;
+            color: #ddd;
+            text-align: center;
+        }
+        body {
+            flex: 1;
+        }
+        header {
+            background: #1f1f1f;
+            color: #ffcc00;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0px 4px 8px rgba(255, 204, 0, 0.5);
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background: #222;
+            padding: 10px 0;
+        }
+        .nav a {
+            color: #ffcc00;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin: 0 10px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .nav a:hover {
+            color: #ff9900;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #1c1c1c;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+            flex: 1;
+        }
+        h2 {
+            color: #ffcc00;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .timer-container {
+            margin-bottom: 20px;
+        }
+        #timer {
+            font-size: 40px;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: #000;
+            color: #00ffcc;
+            border: 3px solid #00ffcc;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 15px #00ffcc;
+            margin-top: 10px;
+        }
+        .number-display {
+            font-size: 36px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background: #1c1c1c;
+            display: inline-block;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(255, 204, 0, 0.5);
+        }
+        .score-display {
+            font-size: 24px;
+            margin-top: 10px;
+            color: #00ffcc;
+        }
+        input {
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #2a2a2a;
+            color: #ddd;
+            margin-top: 15px;
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 25px;
+            margin: 15px 10px 0;
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            color: #121212;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #ff9900, #ff6600);
+            box-shadow: 0 0 20px rgba(255, 153, 0, 1);
+            transform: translateY(-3px);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        #result {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+        .correct {
+            color: #00ff00;
+        }
+        .incorrect {
+            color: #ff0000;
+        }
+        .back-btn {
+            margin-top: 30px;
+        }
+        .back-btn a {
+            background: #ffcc00;
+            color: #1c1c1c;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ffcc00;
+            transition: 0.3s;
+        }
+        .back-btn a:hover {
+            background: #ff9900;
+            box-shadow: 0 0 15px #ff9900;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1f1f1f;
+            color: #ffcc00;
+            font-size: 14px;
+            box-shadow: 0px -4px 6px rgba(255, 204, 0, 0.5);
+            border-radius: 20px 20px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <header>HectoClash</header>
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="gamemode.html">Game Modes</a>
+        <a href="Leaderboard.html">Leaderboard</a>
+    </div>
+    <div class="container">
+        <h2>Timer:</h2>
+        <div class="timer-container">
+            <div id="timer">60</div>
+        </div>
+        <div class="score-display" id="score">Score: 0</div>
+        <h2>Generated Number:</h2>
+        <div class="number-display" id="randomNumber">Loading...</div>
+        <input type="text" id="userInput" placeholder="Enter your expression" />
+        <button onclick="checkExpression()" id="submitBtn">Submit</button>
+        <button onclick="restartGame()" id="restartBtn">Restart</button>
+        <p id="result"></p>
+        <div class="back-btn">
+            <a href="Front Page.html">Back to Home</a>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 HectoClash. All rights reserved.
+    </footer>
+
+    <!-- Audio Elements -->
+    <audio id="correctSound" src="sounds/correct.mp3"></audio>
+    <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
+
+    <script>
+        const operators = ['+', '-', '*', '/', '^'];
+        let timerValue = 60;
+        let timerInterval;
+        let randomNumber = "";
+        let score = 0;
+
+        const correctSound = document.getElementById("correctSound");
+        const wrongSound = document.getElementById("wrongSound");
+
+        function applyOperator(a, b, op) {
+            switch (op) {
+                case '+': return a + b;
+                case '-': return a - b;
+                case '*': return a * b;
+                case '/': return (b !== 0) ? a / b : 1e9;
+                case '^': return Math.pow(a, b);
+                default: return 1e9;
+            }
+        }
+
+        function evaluateExpression(expr) {
+            try {
+                let result = eval(expr.replace(/\^/g, '**'));
+                return Math.abs(result - 100) < 1e-6;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function generateExpressions(digits, expr, index) {
+            if (index === 6) return evaluateExpression(expr);
+            for (let op of operators) {
+                if (generateExpressions(digits, expr + op + digits[index], index + 1)) return true;
+            }
+            return generateExpressions(digits, expr + digits[index], index + 1);
+        }
+
+        function canForm100(digits) {
+            return generateExpressions(digits, digits[0], 1);
+        }
+
+        function generateValidNumber() {
+            let num;
+            do {
+                num = '';
+                while (num.length < 6) {
+                    let digit = Math.floor(Math.random() * 9) + 1;
+                    num += digit;
+                }
+            } while (!canForm100(num));
+            return num;
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById("score").innerText = "Score: " + score;
+        }
+
+        function startGame() {
+            timerValue = 60;
+            score = 0;
+            updateScoreDisplay();
+            document.getElementById("timer").innerText = timerValue;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timerValue--;
+                document.getElementById("timer").innerText = timerValue;
+                if (timerValue <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("result").innerText = "Time's up! Final Score: " + score;
+                    document.getElementById("result").className = "incorrect";
+                    document.getElementById("userInput").disabled = true;
+                    document.getElementById("submitBtn").disabled = true;
+                }
+            }, 1000);
+
+            randomNumber = generateValidNumber();
+            document.getElementById("randomNumber").innerText = randomNumber;
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").disabled = false;
+            document.getElementById("submitBtn").disabled = false;
+            document.getElementById("result").innerText = "";
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        function checkExpression() {
+            let input = document.getElementById("userInput").value;
+            let resultDisplay = document.getElementById("result");
+
+            let validSymbols = /^[0-9+\-*/^()]+$/;
+            if (!validSymbols.test(input)) {
+                wrongSound.play();
+                resultDisplay.innerHTML = "Invalid symbols used!";
+                resultDisplay.className = "incorrect";
+                return;
+            }
+
+            let cleanedInput = input.replace(/[^0-9]/g, '');
+            if (!randomNumber.startsWith(cleanedInput)) {
+                wrongSound.play();
+                resultDisplay.innerHTML = "Digits must appear in the same order!";
+                resultDisplay.className = "incorrect";
+                return;
+            }
+
+            if (evaluateExpression(input)) {
+                score++;
+                updateScoreDisplay();
+                resultDisplay.innerHTML = "Correct! The result is 100.";
+                resultDisplay.className = "correct";
+                correctSound.play();
+                randomNumber = generateValidNumber();
+                document.getElementById("randomNumber").innerText = randomNumber;
+                document.getElementById("userInput").value = "";
+            } else {
+                wrongSound.play();
+                resultDisplay.innerHTML = "Incorrect! Try again.";
+                resultDisplay.className = "incorrect";
+            }
+        }
+
+        // Listen for Enter key on input field
+        document.getElementById("userInput").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                checkExpression();
+            }
+        });
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>
