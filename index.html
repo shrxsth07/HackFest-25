@@ -18,6 +18,9 @@
       padding: 0;
       background: linear-gradient(to right, #0f0f0f, #1c1c1c);
       color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -34,11 +37,13 @@
 
     nav {
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 30px;
       background: #232323;
-      padding: 12px 0;
+      padding: 12px 20px;
       box-shadow: 0 2px 8px rgba(255, 204, 0, 0.15);
+      position: relative;
     }
 
     nav a {
@@ -54,6 +59,23 @@
     nav a:hover {
       background: #ffcc00;
       color: #121212;
+    }
+
+    .profile {
+      margin-left: auto;
+      background: #ffcc00;
+      color: #121212;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .profile:hover {
+      background: #ffaa00;
+      transform: scale(1.05);
     }
 
     .hero {
@@ -101,6 +123,7 @@
       background: #1e1e1e;
       border-radius: 14px;
       box-shadow: 0 6px 20px rgba(255, 204, 0, 0.1);
+      flex-grow: 1;
     }
 
     section {
@@ -108,18 +131,17 @@
     }
 
     section h2 {
-        color: #ffcc00;
-        font-size: 26px;
-        margin-bottom: 15px;
-        padding-left: 10px;
-        border-left: 4px solid #ffcc00;
+      color: #ffcc00;
+      font-size: 26px;
+      margin-bottom: 15px;
+      padding-left: 10px;
+      border-left: 4px solid #ffcc00;
     }
 
     .play-section h2 {
-    border-left: none;
-    padding-left: 0;
+      border-left: none;
+      padding-left: 0;
     }
-
 
     section p,
     section li {
@@ -174,25 +196,28 @@
     }
 
     @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+      }
       .hero h1 {
         font-size: 30px;
       }
-      nav {
-        flex-direction: column;
-        gap: 12px;
+      .profile {
+        margin: 10px auto 0 auto;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>HectoClash</header>
+  <header>HectoClash: A Competitive Mental Math Revolution</header>
 
   <nav>
     <a href="about.html">About</a>
     <a href="gamemode.html">Game Modes</a>
     <a href="Leaderboard.html">Leaderboard</a>
     <a href="game.html">Play Now</a>
+    <div class="profile" onclick="window.location.href='profile.html'">👤 Profile</div>
   </nav>
 
   <div class="hero">
