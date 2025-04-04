@@ -174,29 +174,29 @@
         <div class="timer-container">
             <div id="timer">60</div>
         </div>
+        <button onclick="startGame()" id="startBtn">Start Game</button>
         <div class="score-display" id="score">Score: 0</div>
         <h2>Generated Number:</h2>
-        <div class="number-display" id="randomNumber">Loading...</div>
-        <input type="text" id="userInput" placeholder="Enter your expression" />
-        <button onclick="checkExpression()" id="submitBtn">Submit</button>
+        <div class="number-display" id="randomNumber">Click Start</div>
+        <input type="text" id="userInput" placeholder="Enter your expression" disabled />
+        <button onclick="checkExpression()" id="submitBtn" disabled>Submit</button>
         <button onclick="restartGame()" id="restartBtn">Restart</button>
         <p id="result"></p>
         <div class="back-btn">
-            <a href="Front Page.html">Back to Home</a>
+            <a href="index.html">Back to Home</a>
         </div>
     </div>
     <footer>
         &copy; 2025 HectoClash. All rights reserved.
     </footer>
 
-    <!-- Audio Elements -->
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
 
     <script>
         const operators = ['+', '-', '*', '/', '^'];
         let timerValue = 60;
-        let timerInterval;
+        let timerInterval = null;
         let randomNumber = "";
         let score = 0;
 
@@ -218,7 +218,7 @@
             try {
                 let result = eval(expr.replace(/\^/g, '**'));
                 return Math.abs(result - 100) < 1e-6;
-            } catch (error) {
+            } catch {
                 return false;
             }
         }
@@ -240,8 +240,7 @@
             do {
                 num = '';
                 while (num.length < 6) {
-                    let digit = Math.floor(Math.random() * 9) + 1;
-                    num += digit;
+                    num += Math.floor(Math.random() * 9) + 1;
                 }
             } while (!canForm100(num));
             return num;
@@ -252,33 +251,48 @@
         }
 
         function startGame() {
-            timerValue = 60;
-            score = 0;
-            updateScoreDisplay();
-            document.getElementById("timer").innerText = timerValue;
-            clearInterval(timerInterval);
+            if (timerInterval) clearInterval(timerInterval);
+
+            document.getElementById("userInput").disabled = false;
+            document.getElementById("submitBtn").disabled = false;
+            document.getElementById("startBtn").disabled = true;
+            document.getElementById("result").innerText = "";
+
             timerInterval = setInterval(() => {
                 timerValue--;
                 document.getElementById("timer").innerText = timerValue;
                 if (timerValue <= 0) {
                     clearInterval(timerInterval);
+                    timerInterval = null;
                     document.getElementById("result").innerText = "Time's up! Final Score: " + score;
                     document.getElementById("result").className = "incorrect";
                     document.getElementById("userInput").disabled = true;
                     document.getElementById("submitBtn").disabled = true;
+                    document.getElementById("startBtn").disabled = false;
                 }
             }, 1000);
 
             randomNumber = generateValidNumber();
             document.getElementById("randomNumber").innerText = randomNumber;
             document.getElementById("userInput").value = "";
-            document.getElementById("userInput").disabled = false;
-            document.getElementById("submitBtn").disabled = false;
-            document.getElementById("result").innerText = "";
         }
 
         function restartGame() {
-            startGame();
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
+            timerValue = 60;
+            score = 0;
+            updateScoreDisplay();
+            document.getElementById("timer").innerText = timerValue;
+            document.getElementById("userInput").value = "";
+            document.getElementById("userInput").disabled = true;
+            document.getElementById("submitBtn").disabled = true;
+            document.getElementById("startBtn").disabled = false;
+            document.getElementById("result").innerText = "";
+            document.getElementById("randomNumber").innerText = "Click Start";
         }
 
         function checkExpression() {
@@ -317,14 +331,11 @@
             }
         }
 
-        // Listen for Enter key on input field
         document.getElementById("userInput").addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
                 checkExpression();
             }
         });
-
-        window.onload = startGame;
     </script>
 </body>
 </html>
