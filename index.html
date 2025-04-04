@@ -78,10 +78,32 @@
       transform: scale(1.05);
     }
 
+    .hero-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spline-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .spline-background iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
     .hero {
+      position: relative;
+      z-index: 1;
       padding: 80px 20px;
       text-align: center;
-      background: linear-gradient(135deg, #1f1f1f, #292929);
       color: #fff;
       box-shadow: inset 0 0 80px rgba(255, 204, 0, 0.1);
     }
@@ -220,10 +242,26 @@
     <div class="profile" onclick="window.location.href='profile.html'">👤 Profile</div>
   </nav>
 
-  <div class="hero">
-    <h1>Play HectoClash Online with Friends</h1>
-    <p>Challenge players worldwide or test your skills against AI!</p>
-    <button onclick="window.location.href='game.html'">Start Playing</button>
+  <div class="hero-wrapper">
+    <div class="spline-background">
+      <iframe src="https://my.spline.design/particleaibrain-44c658de200b6a576044df4b436bac11/" frameborder="0" allowfullscreen></iframe>
+
+      <!-- ✅ Overlay placed here to cover watermark -->
+      <div style="
+        position: absolute;
+        bottom: 15px;
+        right: 20px;
+        width: 140px;
+        height: 45px;
+        background: #14120c;
+        z-index: 2;
+      "></div>
+    </div>
+    <div class="hero">
+      <h1>Play HectoClash Online with Friends</h1>
+      <p>Challenge players worldwide or test your skills against AI!</p>
+      <button onclick="window.location.href='game.html'">Start Playing</button>
+    </div>
   </div>
 
   <div class="container">
