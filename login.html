@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | HectoClash</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+      color: #ddd;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+    }
+
+    h2 {
+      color: #ffcc00;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ffcc00;
+      border-radius: 5px;
+      background: #2a2a2a;
+      color: #ddd;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #ffcc00;
+      color: #121212;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #ff9900;
+    }
+
+    a {
+      color: #ffcc00;
+      text-decoration: none;
+      display: block;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button onclick="loginUser()">Login</button>
+    <a href="signup.html">Don't have an account? Sign up</a>
+  </div>
+
+  <script>
+    function loginUser() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      const user = JSON.parse(localStorage.getItem(email));
+
+      if (user && user.password === password) {
+        localStorage.setItem("currentUser", email);
+        window.location.href = "profile.html";
+      } else {
+        alert("Invalid email or password!");
+      }
+    }
+  </script>
+
+</body>
+</html>
