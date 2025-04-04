@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Modes - HectoClash</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212;
+      color: #ddd;
+    }
+    header {
+      background: #1f1f1f;
+      color: #ffcc00;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0px 4px 8px rgba(255, 204, 0, 0.5);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #1a1a1a;
+      padding: 12px;
+      box-shadow: 0px 4px 6px rgba(255, 204, 0, 0.3);
+    }
+    nav a {
+      color: #ffcc00;
+      text-decoration: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255, 204, 0, 0.3);
+      border-radius: 8px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 30px;
+      background: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+    }
+    h2 {
+      color: #ffcc00;
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 8px;
+      text-align: center;
+    }
+    .modes-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .mode {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+      box-shadow: 0 2px 10px rgba(255, 204, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .mode:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+    }
+    .mode img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .mode h3 {
+      color: #ffcc00;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .mode p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #1f1f1f;
+      color: #ffcc00;
+      margin-top: 30px;
+      border-radius: 20px 20px 0 0;
+      font-size: 14px;
+      box-shadow: 0px -4px 6px rgba(255, 204, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <header>Game Modes</header>
+
+  <nav>
+    <a href="Front Page.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="play.html">Play Now</a>
+  </nav>
+
+  <div class="container">
+    <h2>Choose Your Game Mode</h2>
+    <div class="modes-container">
+      <div class="mode">
+        <img src="Images/onlinemulti.jpg" alt="Online Multiplayer" />
+        <h3>1v1 Online Multiplayer</h3>
+        <p>Challenge your friends or random players worldwide in real-time chess matches.</p>
+      </div>
+      <div class="mode">
+        <img src="Images/aimode.png" alt="AI Mode" />
+        <h3>AI Mode</h3>
+        <p>Test your skills against an AI opponent with adjustable difficulty levels.</p>
+      </div>
+      <div class="mode">
+        <img src="Images/offline.jpg" alt="Offline Mode" />
+        <h3>Offline Mode</h3>
+        <p>Play against a friend on the same device, perfect for quick and competitive matches.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Multiplayer Chess Game. All rights reserved.
+  </footer>
+</body>
+</html>
