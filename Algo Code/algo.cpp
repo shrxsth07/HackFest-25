@@ -1,106 +1,100 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<char> operators = {'+', '-', '*', '/', '^'};
+vector<char> ops = {'+', '-', '*', '/', '^'};
 
-// Function to apply an operator on two numbers
-double applyOperator(double a, double b, char op) {
+double applyOp(double a, double b, char op) {
     switch (op) {
         case '+': return a + b;
         case '-': return a - b;
         case '*': return a * b;
-        case '/': return (b != 0) ? a / b : 1e9; // Avoid division by zero
+        case '/': return (b == 0) ? 1e9 : a / b;
         case '^': return pow(a, b);
-        default: return 1e9;
     }
+    return 1e9;
 }
 
-// Function to evaluate an expression using stacks (handles precedence)
-bool evaluateExpression(const string &expr, double &result) {
-    stack<double> values;
+int precedence(char op) {
+    if (op == '+' || op == '-') return 1;
+    if (op == '*' || op == '/') return 2;
+    if (op == '^') return 3;
+    return 0;
+}
+
+// Evaluate expression string safely (supports parentheses and precedence)
+bool evaluate(string expr, double &res) {
+    stack<double> nums;
     stack<char> ops;
 
-    for (size_t i = 0; i < expr.length(); i++) {
+    auto apply = [&]() {
+        double b = nums.top(); nums.pop();
+        double a = nums.top(); nums.pop();
+        char op = ops.top(); ops.pop();
+        nums.push(applyOp(a, b, op));
+    };
+
+    for (int i = 0; i < expr.size(); i++) {
         if (isdigit(expr[i])) {
             double num = expr[i] - '0';
-            while (i + 1 < expr.length() && isdigit(expr[i + 1])) {
+            while (i + 1 < expr.size() && isdigit(expr[i + 1])) {
                 num = num * 10 + (expr[i + 1] - '0');
                 i++;
             }
-            values.push(num);
+            nums.push(num);
         } else if (expr[i] == '(') {
-            ops.push(expr[i]);
+            ops.push('(');
         } else if (expr[i] == ')') {
-            while (!ops.empty() && ops.top() != '(') {
-                double b = values.top(); values.pop();
-                double a = values.top(); values.pop();
-                char op = ops.top(); ops.pop();
-                values.push(applyOperator(a, b, op));
-            }
-            ops.pop(); // Remove '('
+            while (!ops.empty() && ops.top() != '(') apply();
+            ops.pop();
         } else {
-            while (!ops.empty() && ops.top() != '(') {
-                double b = values.top(); values.pop();
-                double a = values.top(); values.pop();
-                char op = ops.top(); ops.pop();
-                values.push(applyOperator(a, b, op));
-            }
+            while (!ops.empty() && precedence(ops.top()) >= precedence(expr[i]))
+                apply();
             ops.push(expr[i]);
         }
     }
-    while (!ops.empty()) {
-        double b = values.top(); values.pop();
-        double a = values.top(); values.pop();
-        char op = ops.top(); ops.pop();
-        values.push(applyOperator(a, b, op));
-    }
-    result = values.top();
-    return abs(result - 100) < 1e-6;
+    while (!ops.empty()) apply();
+
+    res = nums.top();
+    return fabs(res - 100.0) < 1e-6;
 }
 
-// Backtracking function to generate expressions with parentheses
-bool generateExpressions(string digits, string expr, int index) {
-    if (index == 6) {
-        double result;
-        return evaluateExpression(expr, result);
-    }
-    
-    bool found = false;
-    for (char op : operators) {
-        string newExpr = expr + op + digits[index];
-        if (generateExpressions(digits, newExpr, index + 1)) {
-            found = true;
+// Backtracking to generate expressions
+void backtrack(string digits, string expr, int idx, vector<string> &answers) {
+    if (idx == digits.size()) {
+        double val;
+        if (evaluate(expr, val)) {
+            answers.push_back(expr);
         }
+        return;
     }
-    
-    // Also consider concatenation (no operator)
-    if (generateExpressions(digits, expr + digits[index], index + 1)) {
-        found = true;
-    }
-    
-    return found;
-}
 
-// Wrapper function
-bool canForm100(string digits) {
-    return generateExpressions(digits, string(1, digits[0]), 1);
+    for (char op : ops) {
+        backtrack(digits, expr + op + digits[idx], idx + 1, answers);
+    }
+
+    // No operator (concatenate)
+    backtrack(digits, expr + digits[idx], idx + 1, answers);
 }
 
 int main() {
-    vector<string> cannotForm100;
-    
-    for (int num=666566;num<=666646;num++){
-        string input=to_string(num);
-        if(!canForm100(input)) {
-            cannotForm100.push_back(input);
-        }
+    string digits;
+    cout << "Enter 6-digit number: ";
+    cin >> digits;
+
+    if (digits.size() != 6 || !all_of(digits.begin(), digits.end(), ::isdigit)) {
+        cout << "Invalid input. Please enter exactly 6 digits.\n";
+        return 1;
     }
-    
-    cout << "Numbers that cannot form 100: \n";
-    for (const string &num : cannotForm100) {
-        cout << num << " ";
+
+    vector<string> expressions;
+    backtrack(digits, string(1, digits[0]), 1, expressions);
+
+    if (expressions.empty()) {
+        cout << "No expression found that evaluates to 100.\n";
+    } else {
+        cout << "Expressions that evaluate to 100:\n";
+        for (auto &e : expressions) cout << e << " = 100\n";
     }
-    cout << endl;
-    
+
     return 0;
 }
